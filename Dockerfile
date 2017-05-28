@@ -2,7 +2,7 @@ FROM fedora:latest
 MAINTAINER Chris Byrd
 
 RUN dnf clean all \
-  && dnf update -v --debugsolver vim-minimal -y \ 
+  && dnf update -v --debugsolver vim-minimal -y \
   && dnf install --best --allowerasing -y \
       automake \
       bash-completion \
@@ -53,15 +53,7 @@ RUN dnf clean all \
       zlib-devel \
     && dnf clean all
 
-# Setup packer for image builds
-RUN mkdir /packer \
-  && cd packer \
-  && wget https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip \
-  && unzip *.zip \
-  && ln -s /packer/packer /usr/local/bin/packer \
-  && rm *.zip
-
-RUN useradd -m dev \ 
+RUN useradd -m dev \
   && echo 'dev:dev' | chpasswd \
   && echo 'root:root' | chpasswd \
   && usermod dev -a -G wheel
@@ -71,11 +63,12 @@ WORKDIR /home/dev
 
 RUN gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
   && curl -v -sSL https://get.rvm.io | bash \
-  && /home/dev/.rvm/bin/rvm install 2.3.1 \ 
-  && /home/dev/.rvm/bin/rvm alias create default 2.3.1 \ 
-  && /home/dev/.rvm/bin/rvm all do gem install --backtrace bundle \  
-  && /home/dev/.rvm/bin/rvm all do gem install --backtrace tmuxinator \  
-  && /home/dev/.rvm/bin/rvm all do gem install --backtrace rubocop \ 
+  && /home/dev/.rvm/bin/rvm install 2.4.1 \
+  && /home/dev/.rvm/bin/rvm alias create default 2.4.1 \
+  && /home/dev/.rvm/bin/rvm all do gem install --backtrace bundle \
+  && /home/dev/.rvm/bin/rvm all do gem install --backtrace tmuxinator \
+  && /home/dev/.rvm/bin/rvm all do gem install --backtrace rubocop \
+  && /home/dev/.rvm/bin/rvm cleanup all \
   && dnf clean all
 
 ENV EDITOR=vim SHELL=/bin/bash GOPATH=/home/dev/godev LC_CTYPE=C.UTF8 LC_ALL=C.UTF8 LD_LIBRARY_PATH=/usr/local/lib
@@ -83,7 +76,7 @@ ENV EDITOR=vim SHELL=/bin/bash GOPATH=/home/dev/godev LC_CTYPE=C.UTF8 LC_ALL=C.U
 # Setup desired directories, bash, and vim
 RUN mkdir src \
   && mkdir godev \
-  && mkdir .ssh \ 
+  && mkdir .ssh \
   && git clone --depth=1 https://github.com/Bash-it/bash-it.git .bash_it \
   && .bash_it/install.sh \
   && echo "export TERM=screen-256color" >> .bashrc \
@@ -95,7 +88,7 @@ RUN mkdir src \
   && git clone https://github.com/cabyrd/dot-files.git \
   && cp dot-files/.vimrc . \
   && cp dot-files/.tmux.conf . \
-  && rm -rf dot-files \ 
-  && vim +PluginInstall +qall 
+  && rm -rf dot-files \
+  && vim +PluginInstall +qall
 
 CMD ["/bin/bash"]

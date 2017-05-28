@@ -13,7 +13,7 @@ Containers are expected to contain a few common development tools as follows:
 * cppcheck
 
 ### Golang
-* Go 1.6.x
+* Go 1.7.5
 * vim-go
 
 ### Python 3
@@ -23,20 +23,19 @@ Containers are expected to contain a few common development tools as follows:
 
 ### Ruby 
 * [RVM](https://rvm.io/)
-* [Ruby 2.3.1](https://www.ruby-lang.org/en/downloads/)
+* [Ruby 2.4.1](https://www.ruby-lang.org/en/downloads/)
 
 ### Source Control
 * Git 
 * Subversion
 
 ###  Editor
-* vim 7.4
+* vim 8.0
 * [vundle](https://github.com/VundleVim/Vundle.vim)
 
 ### Utilities 
 * [tmux](https://tmux.github.io/)
 * [tmuxinator](https://github.com/tmuxinator/tmuxinator)
-* [packer 0.10.1](https://www.packer.io/)
   
 ## **Getting Started**
 ```
